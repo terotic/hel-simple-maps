@@ -16,7 +16,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      zoom: 350,
+      zoom: 450,
     }
   }
 
@@ -34,11 +34,11 @@ class App extends Component {
     return (
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Helsinki Simple Maps</h1>
+            <h1 className="App-title">Helsinki Simple Map</h1>
           </header>
           <ComposableMap className="selection-map" projection="mercator">
-            <ZoomableGroup zoom={ this.state.zoom } center={ [25.04,60.2] } disablePanning={ true }>
-            <Geographies geography={ "data/helsinki_kaupunginosat-wgs84.json" }>
+            <ZoomableGroup zoom={ this.state.zoom } center={ [25.04,60.21] } disablePanning={ true }>
+            <Geographies geography={ "data/helsinki-hoods-topo.json" }>
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={ i }
@@ -50,21 +50,47 @@ class App extends Component {
                   onMouseLeave={this.handleLeave}
                   style={{
                       default: {
-                        fill: "#ECEFF1",
-                        stroke: "#607D8B",
-                        strokeWidth: 0.001,
+                        fill: "#009246",
+                        stroke: "#ffffff",
+                        strokeWidth: 0.0015,
                         outline: "none",
                       },
                       hover: {
-                        fill: "#607D8B",
-                        stroke: "#607D8B",
-                        strokeWidth: 0.001,
+                        fill: "#00d7a7",
+                        stroke: "#ffffff",
+                        strokeWidth: 0.0015,
                         outline: "none",
                       },
                       pressed: {
-                        fill: "#FF5722",
-                        stroke: "#607D8B",
-                        strokeWidth: 0.001,
+                        fill: "#0000bf",
+                        stroke: "#ffffff",
+                        strokeWidth: 0.0015,
+                        outline: "none",
+                      },
+                    }}
+                  />
+              ))}
+            </Geographies>
+            <Geographies geography={ "data/helsinki-sea-topo.json" }>
+              {(geographies, projection) => geographies.map((geography, i) => (
+                <Geography
+                  tabable={false}
+                  geography={ geography }
+                  projection={ projection }
+                  style={{
+                      default: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
+                        outline: "none",
+                      },
+                      pressed: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
                         outline: "none",
                       },
                     }}

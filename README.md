@@ -23,7 +23,9 @@ We fetch the neighborhood area geometries from City of Helsinki [Open WMS API](h
 
 For projection conversion we use [ogr2ogr](http://www.gdal.org/ogr2ogr.html).
 ```
-curl "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=getFeature&typename=avoindata:Kaupunginosajako&outputFormat=application/json" | ogr2ogr -f GeoJSON -t_srs EPSG:4326 -s_srs EPSG:3879 helsinki-hoods-wgs84-geo.json /vsistdin/
+curl "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=getFeature&typename=avoindata:Kaupunginosajako&outputFormat=application/json" \
+| ogr2ogr -f GeoJSON -t_srs EPSG:4326 -s_srs EPSG:3879 \
+helsinki-hoods-wgs84-geo.json /vsistdin/
 ```
 
 Most browser map visalization libraries prefer or require [topojson](https://github.com/topojson/topojson/wiki) format. For format conversion we use [Mapshaper](https://github.com/mbloch/mapshaper). (For some currently unknown reason using [geo2topo](https://github.com/topojson/topojson-server/blob/master/README.md#geo2topo) produces strange results with this source data).
@@ -31,7 +33,8 @@ Most browser map visalization libraries prefer or require [topojson](https://git
 As we convert to topojson we also simplify the geometries.
 
 ```
-mapshaper helsinki-hoods-wgs84-geo.json -simplify 10% -o format=topojson helsinki-hoods-topo.json
+mapshaper helsinki-hoods-wgs84-geo.json -simplify 10% \
+-o format=topojson helsinki-hoods-topo.json
 ```
 
 Resulting file `helsinki-hoods-topo.json` is ready to be used with **react-simple-maps**.
@@ -41,10 +44,12 @@ Resulting file `helsinki-hoods-topo.json` is ready to be used with **react-simpl
 For the sea area masking we use Land Use -geometry from the same source. Conversion as previously.
 
 ```
-curl "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=getFeature&typename=avoindata:Seutukartta_maankaytto_ja_vesistot&outputFormat=application/json" | ogr2ogr -f GeoJSON -t_srs EPSG:4326 -s_srs EPSG:3879 helsinki_maankaytto-wgs84.geojson /vsistdin/
+curl "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=getFeature&typename=avoindata:Seutukartta_maankaytto_ja_vesistot&outputFormat=application/json" \
+| ogr2ogr -f GeoJSON -t_srs EPSG:4326 -s_srs EPSG:3879 \
+helsinki_maankaytto-wgs84.geojson /vsistdin/
 ```
 
-This dataset is very large (18,5MB) and includes a lot of unneeded data layers. For filtering the needed sea area we use ndjson command line tool.
+This dataset is very large (18,5MB) and includes a lot of unneeded data layers. For filtering the needed sea area we use **ndjson** command line tool (could possibly also do this in ogr2ogr pipeline but ndjson documentation was friendlier).
 
 ```
 ndjson-cat helsinki_maankaytto-wgs84.geojson \

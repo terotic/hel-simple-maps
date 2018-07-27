@@ -42,7 +42,7 @@ class App extends Component {
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={ i }
-                  data-tip={geography.properties.nimi_fi}
+                  data-tip={geography.properties.nimi}
                   geography={ geography }
                   projection={ projection }
                   onClick={this.handleClick}

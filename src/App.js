@@ -97,6 +97,61 @@ class App extends Component {
                   />
               ))}
             </Geographies>
+            <Geographies geography={ "data/helsinki-water-topo.json" }>
+              {(geographies, projection) => geographies.map((geography, i) => (
+                <Geography
+                  tabable={false}
+                  geography={ geography }
+                  projection={ projection }
+                  style={{
+                      default: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
+                        outline: "none",
+                      },
+                      pressed: {
+                        fill: "#9fc9eb",
+                        strokeWidth: 0,
+                        outline: "none",
+                      },
+                    }}
+                  />
+              ))}
+            </Geographies>
+            <Geographies geography={ "data/helsinki-motorways-topo.json" }>
+              {(geographies, projection) => geographies.map((geography, i) => (
+                <Geography
+                  tabable={false}
+                  geography={ geography }
+                  projection={ projection }
+                  style={{
+                      default: {
+                        fill: "none",
+                        stroke: "rgba(0,0,0,.1)",
+                        strokeWidth: 0.003,
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: "none",
+                        stroke: "#333333",
+                        strokeWidth: 0.002,
+                        outline: "none",
+                      },
+                      pressed: {
+                        fill: "none",
+                        stroke: "#333333",
+                        strokeWidth: 0.002,
+                        outline: "none",
+                      },
+                    }}
+                  />
+              ))}
+            </Geographies>
             </ZoomableGroup>
           </ComposableMap>
           <ReactTooltip />
